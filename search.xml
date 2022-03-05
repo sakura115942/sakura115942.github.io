@@ -83,36 +83,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HAL库备忘</title>
-    <url>/2020/03/03/HAL%E5%BA%93%E5%A4%87%E5%BF%98/</url>
-    <content><![CDATA[<p>记录HAL库相关</p>
-<span id="more"></span>
-<h1 id="串口输出重定向"><a href="#串口输出重定向" class="headerlink" title="串口输出重定向"></a>串口输出重定向</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">(<span class="keyword">int</span> ch, FILE *f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  HAL_UART_Transmit(&amp;huart1, (<span class="keyword">uint8_t</span> *)&amp;ch, <span class="number">1</span>, <span class="number">0xffff</span>);</span><br><span class="line">  <span class="keyword">return</span> ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdarg.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;string.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> USART2_TXBUF_SIZE_MAX 1024</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">u2_printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    va_list args;</span><br><span class="line">    <span class="keyword">uint32_t</span> length;</span><br><span class="line">    <span class="keyword">uint8_t</span> txbuf[USART2_TXBUF_SIZE_MAX] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    va_start(args, format);</span><br><span class="line">    length = vsnprintf((<span class="keyword">char</span> *)txbuf, <span class="keyword">sizeof</span>(txbuf), (<span class="keyword">char</span> *)format, args);</span><br><span class="line">    va_end(args); </span><br><span class="line">    HAL_UART_Transmit(&amp;huart2, (<span class="keyword">uint8_t</span> *)txbuf, length, HAL_MAX_DELAY);</span><br><span class="line">    <span class="built_in">memset</span>(txbuf, <span class="number">0</span>, USART2_TXBUF_SIZE_MAX);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="更新事件中断"><a href="#更新事件中断" class="headerlink" title="更新事件中断"></a>更新事件中断</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">if</span> (htim-&gt;Instance == TIM6)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>单片机</category>
-      </categories>
-      <tags>
-        <tag>stm32</tag>
-        <tag>HAL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux定时任务</title>
-    <url>/2020/05/03/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
-    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO,</span><br><span class="line">                    datefmt=<span class="string">&#x27;%Y/%m/%d %H:%M:%S&#x27;</span>,</span><br><span class="line">                    <span class="built_in">format</span>=<span class="string">&#x27;[%(asctime)s] [%(levelname)s]: %(message)s&#x27;</span>)</span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    logger.info(<span class="string">&#x27;info message&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">* * * * * python3 /root/test.py &amp;&gt;&gt; /root/test.log</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-  </entry>
-  <entry>
     <title>HEXO搭建</title>
     <url>/2021/04/28/HEXO%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<ol>
@@ -140,9 +110,24 @@
 ]]></content>
   </entry>
   <entry>
-    <title>STM32_HAL_UART_CODE</title>
-    <url>/2020/06/28/STM32-HAL-UART-CODE/</url>
-    <content><![CDATA[]]></content>
+    <title>HAL库备忘</title>
+    <url>/2020/03/03/HAL%E5%BA%93%E5%A4%87%E5%BF%98/</url>
+    <content><![CDATA[<p>记录HAL库相关</p>
+<span id="more"></span>
+<h1 id="串口输出重定向"><a href="#串口输出重定向" class="headerlink" title="串口输出重定向"></a>串口输出重定向</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">(<span class="keyword">int</span> ch, FILE *f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  HAL_UART_Transmit(&amp;huart1, (<span class="keyword">uint8_t</span> *)&amp;ch, <span class="number">1</span>, <span class="number">0xffff</span>);</span><br><span class="line">  <span class="keyword">return</span> ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdarg.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;string.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> USART2_TXBUF_SIZE_MAX 1024</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">u2_printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    va_list args;</span><br><span class="line">    <span class="keyword">uint32_t</span> length;</span><br><span class="line">    <span class="keyword">uint8_t</span> txbuf[USART2_TXBUF_SIZE_MAX] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    va_start(args, format);</span><br><span class="line">    length = vsnprintf((<span class="keyword">char</span> *)txbuf, <span class="keyword">sizeof</span>(txbuf), (<span class="keyword">char</span> *)format, args);</span><br><span class="line">    va_end(args); </span><br><span class="line">    HAL_UART_Transmit(&amp;huart2, (<span class="keyword">uint8_t</span> *)txbuf, length, HAL_MAX_DELAY);</span><br><span class="line">    <span class="built_in">memset</span>(txbuf, <span class="number">0</span>, USART2_TXBUF_SIZE_MAX);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="更新事件中断"><a href="#更新事件中断" class="headerlink" title="更新事件中断"></a>更新事件中断</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">if</span> (htim-&gt;Instance == TIM6)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>单片机</category>
+      </categories>
+      <tags>
+        <tag>stm32</tag>
+        <tag>HAL</tag>
+      </tags>
   </entry>
   <entry>
     <title>Android课堂笔记 ()</title>
@@ -220,21 +205,19 @@
       </categories>
   </entry>
   <entry>
-    <title>cryptology_hash</title>
-    <url>/2022/01/17/cryptology-hash/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>dd</title>
-    <url>/2022/01/17/dd/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>h2</title>
-    <url>/2021/04/20/h2/</url>
-    <content><![CDATA[<p><img src="%E6%94%BF%E6%B2%BB%E7%B4%A0%E5%85%BB.jpg" alt="alt"></p>
-<p><img src="image-20210427134819716.png" alt="image-20210427134819716"></p>
+    <title>Linux定时任务</title>
+    <url>/2020/05/03/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO,</span><br><span class="line">                    datefmt=<span class="string">&#x27;%Y/%m/%d %H:%M:%S&#x27;</span>,</span><br><span class="line">                    <span class="built_in">format</span>=<span class="string">&#x27;[%(asctime)s] [%(levelname)s]: %(message)s&#x27;</span>)</span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    logger.info(<span class="string">&#x27;info message&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">* * * * * python3 /root/test.py &amp;&gt;&gt; /root/test.log</span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
+  </entry>
+  <entry>
+    <title>STM32_HAL_UART_CODE</title>
+    <url>/2020/06/28/STM32-HAL-UART-CODE/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>git 笔记</title>
@@ -297,9 +280,33 @@
       </tags>
   </entry>
   <entry>
-    <title>leetcode_100_1</title>
+    <title>h2</title>
+    <url>/2021/04/20/h2/</url>
+    <content><![CDATA[<p><img src="%E6%94%BF%E6%B2%BB%E7%B4%A0%E5%85%BB.jpg" alt="alt"></p>
+<p><img src="image-20210427134819716.png" alt="image-20210427134819716"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>cryptology_hash</title>
+    <url>/2022/01/17/cryptology-hash/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>dd</title>
+    <url>/2022/01/17/dd/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>hello3</title>
+    <url>/2021/04/26/hello3/</url>
+    <content><![CDATA[<p><img src="66675067_p0.jpg" alt="alt"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>LeetCode 热题100 系列一</title>
     <url>/2022/01/17/leetcode-100-1/</url>
-    <content><![CDATA[<span id="more"></span>
+    <content><![CDATA[<p>🔥 LeetCode 热题100 第1-10题</p>
+<span id="more"></span>
 
 <h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a><a href="https://leetcode-cn.com/problems/two-sum/"><em>两数之和</em></a></h2><p>普通版本，时间复杂度O(n^2)</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span></span><br><span class="line">        length = <span class="built_in">len</span>(nums)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length-<span class="number">1</span>):</span><br><span class="line">            tmp = target - nums[i]</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, length):</span><br><span class="line">                <span class="keyword">if</span> tmp == nums[j]:</span><br><span class="line">                    <span class="keyword">return</span> [i, j]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -310,19 +317,42 @@
 <p>遍历的时候通过填充字典，保存已经遍历过的数值，也就是向左查询</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span></span><br><span class="line">        hashmap=&#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i,num <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">            <span class="keyword">if</span> hashmap.get(target - num) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">return</span> [i,hashmap.get(target - num)]</span><br><span class="line">            hashmap[num] = i</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a><a href="https://leetcode-cn.com/problems/add-two-numbers/"><em>两数相加</em></a></h2><h2 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/"><em>无重复字符的最长子串</em></a></h2>]]></content>
+<h2 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a><a href="https://leetcode-cn.com/problems/add-two-numbers/"><em>两数相加</em></a></h2><p>遍历链表，时间复杂度O(n)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addTwoNumbers</span>(<span class="params">self, l1: ListNode, l2: ListNode</span>) -&gt; ListNode:</span></span><br><span class="line">        CF = <span class="number">0</span>  <span class="comment"># 进位标志</span></span><br><span class="line">        l3 = ListNode()</span><br><span class="line">        index = l3</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            tmp = l1.val + l2.val + CF</span><br><span class="line">            CF = <span class="number">1</span> <span class="keyword">if</span> tmp&gt;=<span class="number">10</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            index.<span class="built_in">next</span> = ListNode(tmp%<span class="number">10</span>)</span><br><span class="line">            index = index.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">if</span> l1.<span class="built_in">next</span> <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> (l2.<span class="built_in">next</span> <span class="keyword">is</span> <span class="literal">None</span>):</span><br><span class="line">                <span class="keyword">if</span> CF == <span class="number">1</span>:  <span class="comment"># 如果最后出现进位，需要补上</span></span><br><span class="line">                    index.<span class="built_in">next</span> = ListNode(CF)</span><br><span class="line">                <span class="keyword">return</span> l3.<span class="built_in">next</span></span><br><span class="line">            l1 = l1.<span class="built_in">next</span> <span class="keyword">if</span> l1.<span class="built_in">next</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> ListNode(<span class="number">0</span>)</span><br><span class="line">            l2 = l2.<span class="built_in">next</span> <span class="keyword">if</span> l2.<span class="built_in">next</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> ListNode(<span class="number">0</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addTwoNumbers</span>(<span class="params">self, l1: ListNode, l2: ListNode</span>) -&gt; ListNode:</span></span><br><span class="line">        l3 = ListNode()</span><br><span class="line">        <span class="keyword">return</span> foo(l1, l2, l3)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo</span>(<span class="params">l1, l2, l3</span>):</span></span><br><span class="line">        <span class="keyword">if</span> l1.<span class="built_in">next</span> <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> (l2.<span class="built_in">next</span> <span class="keyword">is</span> <span class="literal">None</span>):</span><br><span class="line">            <span class="keyword">if</span> CF == <span class="number">1</span>:  <span class="comment"># 如果最后出现进位，需要补上</span></span><br><span class="line">                index.<span class="built_in">next</span> = ListNode(CF)</span><br><span class="line">                index = index.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> l3.<span class="built_in">next</span></span><br><span class="line">        foo(l1, l2, l3)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/"><em>无重复字符的最长子串</em></a></h2><p>使用散列表记录判断字符串是否重复，两层循环，时间复杂度O(n^2)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lengthOfLongestSubstring</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        length = <span class="number">0</span></span><br><span class="line">        sl = <span class="built_in">len</span>(s)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(sl):</span><br><span class="line">            hashmap = &#123;&#125;</span><br><span class="line">            tl = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i, sl):</span><br><span class="line">                <span class="keyword">if</span> hashmap.get(s[j], <span class="literal">None</span>) <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                    hashmap[s[j]] = <span class="number">0</span></span><br><span class="line">                    tl += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> tl &gt; length:</span><br><span class="line">                length = tl</span><br><span class="line">        <span class="keyword">return</span> length</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用滑动窗口，时间复杂度O(n)<br>使用散列表记录已经出现过的字符的位置，当字符重复的时候，将“窗口”滑动，滑动到重复字符的第一次出现位置后，排除重复。<br>题目只需要返回长度，因此记录最长长度即可，无需最长长度对应的子串位置。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bug待修复</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lengthOfLongestSubstring</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        length = <span class="number">0</span></span><br><span class="line">        max_length = <span class="number">0</span></span><br><span class="line">        hashmap = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">            <span class="keyword">if</span> hashmap.get(s[i], <span class="literal">None</span>) <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                length = length + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                length = i - hashmap[s[i]]</span><br><span class="line">                <span class="keyword">if</span> length &gt; max_length:</span><br><span class="line">                    max_length = length</span><br><span class="line">            hashmap[s[i]] = i</span><br><span class="line">        <span class="keyword">return</span> max_length</span><br></pre></td></tr></table></figure>
+
+<h2 id="寻找两个正序数组的中位数"><a href="#寻找两个正序数组的中位数" class="headerlink" title="寻找两个正序数组的中位数"></a><a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/"><em>寻找两个正序数组的中位数</em></a></h2><p>时间复杂度O(n)</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMedianSortedArrays</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], nums2: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">float</span>:</span></span><br><span class="line">        l1 = <span class="built_in">len</span>(nums1)</span><br><span class="line">        l2 = <span class="built_in">len</span>(nums2)</span><br><span class="line">        al = l1 + l2  <span class="comment"># all length</span></span><br><span class="line">        c1 = <span class="number">0</span>  <span class="comment"># nums1 count</span></span><br><span class="line">        c2 = <span class="number">0</span>  <span class="comment"># nums2 count</span></span><br><span class="line">        curr = <span class="number">0</span>  <span class="comment"># current value</span></span><br><span class="line">        mid = <span class="built_in">int</span>(al/<span class="number">2</span>+<span class="number">0.5</span>)  <span class="comment"># 中位数在第几个元素的位置</span></span><br><span class="line">        even_flag = <span class="number">1</span> <span class="keyword">if</span> al % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span>  <span class="comment"># 中位数有两个</span></span><br><span class="line">        <span class="keyword">while</span> c1&lt;l1 <span class="keyword">and</span> c2&lt;l2 <span class="keyword">and</span> c1+c2!=mid:</span><br><span class="line">            <span class="keyword">if</span> nums1[c1] &lt; nums2[c2]:</span><br><span class="line">                curr = nums1[c1]</span><br><span class="line">                c1 += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                curr = nums2[c2]</span><br><span class="line">                c2 += <span class="number">1</span></span><br><span class="line">        rl = <span class="built_in">int</span>((al - c1 - c2)/<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">if</span> c1+c2==mid:</span><br><span class="line">            <span class="keyword">if</span> even_flag:</span><br><span class="line">                <span class="built_in">next</span> = nums1[c1] <span class="keyword">if</span> c1&lt;l1 <span class="keyword">else</span> nums2[c2]</span><br><span class="line">                <span class="keyword">return</span> (curr + <span class="built_in">next</span>)/<span class="number">2</span></span><br><span class="line">            <span class="keyword">return</span> curr</span><br><span class="line">        <span class="keyword">elif</span> c1&lt;l1:</span><br><span class="line">            curr = nums1[c1+rl-<span class="number">1</span>] <span class="keyword">if</span> even_flag <span class="keyword">else</span> nums1[c1+rl]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            curr = nums2[c2+rl-<span class="number">1</span>] <span class="keyword">if</span> even_flag <span class="keyword">else</span> nums2[c2+rl]</span><br><span class="line">        <span class="keyword">if</span> even_flag:</span><br><span class="line">            <span class="built_in">next</span> = nums1[c1+rl] <span class="keyword">if</span> c1&lt;l1 <span class="keyword">else</span> nums2[c2+rl]</span><br><span class="line">            <span class="keyword">return</span> (curr + <span class="built_in">next</span>)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> curr</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+
+<h2 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a><a href="https://leetcode-cn.com/problems/longest-palindromic-substring/"><em>最长回文子串</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="正则表达式匹配"><a href="#正则表达式匹配" class="headerlink" title="正则表达式匹配"></a><a href=""><em>正则表达式匹配</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="盛最多水的容器"><a href="#盛最多水的容器" class="headerlink" title="盛最多水的容器"></a><a href=""><em>盛最多水的容器</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="三数之和"><a href="#三数之和" class="headerlink" title="三数之和"></a><a href=""><em>三数之和</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="电话号码的字母组合"><a href="#电话号码的字母组合" class="headerlink" title="电话号码的字母组合"></a><a href=""><em>电话号码的字母组合</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="删除链表的倒数第-N-个结点"><a href="#删除链表的倒数第-N-个结点" class="headerlink" title="删除链表的倒数第 N 个结点"></a><a href=""><em>删除链表的倒数第 N 个结点</em></a></h2><p>时间复杂度O()</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
-    <title>hello3</title>
-    <url>/2021/04/26/hello3/</url>
-    <content><![CDATA[<p><img src="66675067_p0.jpg" alt="alt"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>mysql安装注意事项</title>
-    <url>/2020/08/30/mysql%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<p>记录：8月17在阿里云上安装MySQL注意事项<br>1.如果MySQL没有启动，则重启服务器，安装教程参考菜鸟MySQL教程<br>2.MySQL5.7以上版本会生成默认密码，需要前往usr/log/mysql/mysqld查看日志<br>3.使用这个密码登陆后需要修改，否则无法进行其他操作<br>4.远程连接该数据库的时候，需要开放服务器提供商的防火墙端口以及在MySQL里面设置可连接的ip</p>
-]]></content>
+    <title>python生成式</title>
+    <url>/2020/03/26/python%E7%94%9F%E6%88%90%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>队列的实现</title>
@@ -333,11 +363,6 @@
       </categories>
   </entry>
   <entry>
-    <title>python生成式</title>
-    <url>/2020/03/26/python%E7%94%9F%E6%88%90%E5%BC%8F/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>requests的基本使用</title>
     <url>/2020/01/22/requests%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla&#x27;</span>&#125;</span><br><span class="line">params = &#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;</span><br><span class="line">data=&#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;</span><br><span class="line">cookies = &#123;&#125;</span><br><span class="line">r = requests.get(<span class="string">&#x27;https://httpbin.org/get&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = requests.post(<span class="string">&#x27;https://httpbin.org/post&#x27;</span>, data=data)</span><br><span class="line"></span><br><span class="line">r.encoding = r.apparent_encoding</span><br><span class="line"><span class="built_in">print</span>(r.status_code)</span><br><span class="line"><span class="built_in">print</span>(r.url)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br><span class="line"><span class="built_in">print</span>(r.json)</span><br></pre></td></tr></table></figure>
@@ -345,6 +370,12 @@
 <h1 id="session"><a href="#session" class="headerlink" title="session"></a>session</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br></pre></td></tr></table></figure>
 
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://requests.readthedocs.io/en/master/">https://requests.readthedocs.io/en/master/</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>mysql安装注意事项</title>
+    <url>/2020/08/30/mysql%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<p>记录：8月17在阿里云上安装MySQL注意事项<br>1.如果MySQL没有启动，则重启服务器，安装教程参考菜鸟MySQL教程<br>2.MySQL5.7以上版本会生成默认密码，需要前往usr/log/mysql/mysqld查看日志<br>3.使用这个密码登陆后需要修改，否则无法进行其他操作<br>4.远程连接该数据库的时候，需要开放服务器提供商的防火墙端口以及在MySQL里面设置可连接的ip</p>
 ]]></content>
   </entry>
   <entry>
@@ -460,26 +491,6 @@
       </tags>
   </entry>
   <entry>
-    <title>scrapy爬取豆瓣Top250</title>
-    <url>/2020/03/18/scrapy%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3Top250/</url>
-    <content><![CDATA[<p>DOUBAN\run.py </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.cmdline <span class="keyword">import</span> execute</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    command = <span class="string">&#x27;scrapy crawl Top250 -o top250.csv&#x27;</span></span><br><span class="line">    execute(command.split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-
-<p>DOUBAN\spider\Top250.py </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> DOUBAN.items <span class="keyword">import</span> DoubanItem</span><br><span class="line"><span class="comment">#scrapy shell -s USER_AGENT=&quot;Mozilla&quot; &quot;https://movie.douban.com/top250&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Top250Spider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">    name = <span class="string">&#x27;Top250&#x27;</span></span><br><span class="line">    allowed_domains = [<span class="string">&#x27;douban.com&#x27;</span>]</span><br><span class="line">    start_urls = [<span class="string">&#x27;https://movie.douban.com/top250&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">        next_page = response.xpath(<span class="string">&#x27;//span[@class=&quot;next&quot;]/a/@href&#x27;</span>).get()</span><br><span class="line">        <span class="keyword">if</span> next_page <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">yield</span> response.follow(next_page, callback=self.parse)</span><br><span class="line">        info = response.xpath(<span class="string">&#x27;//div[@class=&quot;info&quot;]&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> each <span class="keyword">in</span> info:</span><br><span class="line">            item = DoubanItem()</span><br><span class="line">            item[<span class="string">&#x27;title&#x27;</span>] = each.xpath(<span class="string">&#x27;div[@class=&quot;hd&quot;]/a/span/text()&#x27;</span>).get()</span><br><span class="line">            item[<span class="string">&#x27;rating_num&#x27;</span>] = each.xpath(<span class="string">&#x27;.//span[@class=&quot;rating_num&quot;]/text()&#x27;</span>).get()</span><br><span class="line">            item[<span class="string">&#x27;quote&#x27;</span>] = each.xpath(<span class="string">&#x27;.//span[@class=&quot;inq&quot;]/text()&#x27;</span>).get()</span><br><span class="line">            <span class="keyword">yield</span> item</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>DOUBAN\item.py </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanItem</span>(<span class="params">scrapy.Item</span>):</span></span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    rating_num = scrapy.Field()</span><br><span class="line">    quote = scrapy.Field()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-        <category>爬虫</category>
-      </categories>
-      <tags>
-        <tag>scrapy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>单向链表的实现</title>
     <url>/2020/02/09/singly-linked-list-realize/</url>
     <content><![CDATA[<h1 id="什么是链表"><a href="#什么是链表" class="headerlink" title="什么是链表"></a>什么是链表</h1><blockquote>
@@ -509,6 +520,50 @@
       </categories>
   </entry>
   <entry>
+    <title>scrapy爬取豆瓣Top250</title>
+    <url>/2020/03/18/scrapy%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3Top250/</url>
+    <content><![CDATA[<p>DOUBAN\run.py </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.cmdline <span class="keyword">import</span> execute</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    command = <span class="string">&#x27;scrapy crawl Top250 -o top250.csv&#x27;</span></span><br><span class="line">    execute(command.split(<span class="string">&#x27; &#x27;</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<p>DOUBAN\spider\Top250.py </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> DOUBAN.items <span class="keyword">import</span> DoubanItem</span><br><span class="line"><span class="comment">#scrapy shell -s USER_AGENT=&quot;Mozilla&quot; &quot;https://movie.douban.com/top250&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Top250Spider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">    name = <span class="string">&#x27;Top250&#x27;</span></span><br><span class="line">    allowed_domains = [<span class="string">&#x27;douban.com&#x27;</span>]</span><br><span class="line">    start_urls = [<span class="string">&#x27;https://movie.douban.com/top250&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">        next_page = response.xpath(<span class="string">&#x27;//span[@class=&quot;next&quot;]/a/@href&#x27;</span>).get()</span><br><span class="line">        <span class="keyword">if</span> next_page <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">yield</span> response.follow(next_page, callback=self.parse)</span><br><span class="line">        info = response.xpath(<span class="string">&#x27;//div[@class=&quot;info&quot;]&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> each <span class="keyword">in</span> info:</span><br><span class="line">            item = DoubanItem()</span><br><span class="line">            item[<span class="string">&#x27;title&#x27;</span>] = each.xpath(<span class="string">&#x27;div[@class=&quot;hd&quot;]/a/span/text()&#x27;</span>).get()</span><br><span class="line">            item[<span class="string">&#x27;rating_num&#x27;</span>] = each.xpath(<span class="string">&#x27;.//span[@class=&quot;rating_num&quot;]/text()&#x27;</span>).get()</span><br><span class="line">            item[<span class="string">&#x27;quote&#x27;</span>] = each.xpath(<span class="string">&#x27;.//span[@class=&quot;inq&quot;]/text()&#x27;</span>).get()</span><br><span class="line">            <span class="keyword">yield</span> item</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>DOUBAN\item.py </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanItem</span>(<span class="params">scrapy.Item</span>):</span></span><br><span class="line">    title = scrapy.Field()</span><br><span class="line">    rating_num = scrapy.Field()</span><br><span class="line">    quote = scrapy.Field()</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>scrapy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32-定时器</title>
+    <url>/2020/04/09/stm32-timer/</url>
+    <content><![CDATA[<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>堆栈的实现</title>
+    <url>/2020/02/17/stack-realize/</url>
+    <content><![CDATA[<h1 id="什么是堆栈"><a href="#什么是堆栈" class="headerlink" title="什么是堆栈"></a>什么是堆栈</h1><h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">``` c</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ElementType e1, e2, e3, e4;</span><br><span class="line">    e1.value = <span class="number">1</span>; e2.value = <span class="number">2</span>; e3.value = <span class="number">3</span>; e4.value = <span class="number">4</span>;</span><br><span class="line">    NodeType* <span class="built_in">stack</span> = Stack_Create();</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e1);</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e2);</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e3);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Stack_IsEmpty(<span class="built_in">stack</span>)) <span class="built_in">printf</span>(<span class="string">&quot;stack is empty&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;stack is not empty&quot;</span>);</span><br><span class="line"></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href=""></a></p>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>树</title>
+    <url>/2020/04/21/tree/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>socket聊天室(Java实现)</title>
     <url>/2021/05/05/socket%E8%81%8A%E5%A4%A9%E5%AE%A4-Java%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<blockquote>
@@ -528,27 +583,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>堆栈的实现</title>
-    <url>/2020/02/17/stack-realize/</url>
-    <content><![CDATA[<h1 id="什么是堆栈"><a href="#什么是堆栈" class="headerlink" title="什么是堆栈"></a>什么是堆栈</h1><h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">``` c</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ElementType e1, e2, e3, e4;</span><br><span class="line">    e1.value = <span class="number">1</span>; e2.value = <span class="number">2</span>; e3.value = <span class="number">3</span>; e4.value = <span class="number">4</span>;</span><br><span class="line">    NodeType* <span class="built_in">stack</span> = Stack_Create();</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e1);</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e2);</span><br><span class="line">    Stack_Push(<span class="built_in">stack</span>, &amp;e3);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;弹出%d\n&quot;</span>, Stack_Pop(<span class="built_in">stack</span>)-&gt;value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Stack_IsEmpty(<span class="built_in">stack</span>)) <span class="built_in">printf</span>(<span class="string">&quot;stack is empty&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;stack is not empty&quot;</span>);</span><br><span class="line"></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href=""></a></p>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>STM32-定时器</title>
-    <url>/2020/04/09/stm32-timer/</url>
-    <content><![CDATA[<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
-    <title>树</title>
-    <url>/2020/04/21/tree/</url>
+    <title>字符串转算术表达式(堆栈)</title>
+    <url>/2020/03/25/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%A0%86%E6%A0%88/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -567,21 +603,6 @@
       </tags>
   </entry>
   <entry>
-    <title>字符串转算术表达式(堆栈)</title>
-    <url>/2020/03/25/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%A0%86%E6%A0%88/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>树莓派部署Django</title>
-    <url>/2020/03/19/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%83%A8%E7%BD%B2Django/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>树莓派相关</title>
-    <url>/2020/02/27/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>蔡勒公式</title>
     <url>/2020/03/23/%E8%94%A1%E5%8B%92%E5%85%AC%E5%BC%8F/</url>
     <content><![CDATA[<blockquote>
@@ -592,6 +613,16 @@
 <p>$$<br>h(\theta) = \sum_{j=0} ^n \theta_j x_j<br>$$</p>
 <p>$$<br>\int_{1}^{2}{x}dx \<br>\sum_{i=1}^{\infty}{x}<br>$$</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>树莓派相关</title>
+    <url>/2020/02/27/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>树莓派部署Django</title>
+    <url>/2020/03/19/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%83%A8%E7%BD%B2Django/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>蜂鸣器演奏《送别》</title>
